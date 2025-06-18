@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PBAC & ReBAC: Modern Authorization Models for Enterprise Security</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>PBAC & ReBAC</h1>
+            <p class="subtitle">Choosing the Right Authorization Model for Modern Enterprise Security</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro-section">
+            <p>
+                As organizations face increasingly complex authorization challenges with distributed architectures, cloud services, and diverse user bases, traditional access control methods are showing their limitations. Policy-Based Access Control (PBAC) and Relationship-Based Access Control (ReBAC) represent two modern approaches to solving these challenges, each with distinct advantages for different use cases.
+            </p>
+        </section>
+
+        <section class="comparison-grid">
+            <div class="model-card pbac">
+                <div class="model-title">
+                    <div class="model-icon">📋</div>
+                    <span>Policy-Based Access Control</span>
+                </div>
+                <p class="model-description">
+                    PBAC is a comprehensive authorization framework that centralizes access control through business-friendly policies. It combines the best of RBAC and ABAC, allowing organizations to create natural language policies that evaluate user attributes, resource properties, and environmental conditions in real-time.
+                </p>
+                <ul class="feature-list">
+                    <li><span class="check-icon">✓</span> Business-friendly natural language policies</li>
+                    <li><span class="check-icon">✓</span> Centralized policy management</li>
+                    <li><span class="check-icon">✓</span> Dynamic, context-aware decisions</li>
+                    <li><span class="check-icon">✓</span> Fine and coarse-grained control</li>
+                    <li><span class="check-icon">✓</span> Reduced compliance burden</li>
+                    <li><span class="check-icon">✓</span> Scales without role explosion</li>
+                </ul>
+            </div>
+
+            <div class="model-card rebac">
+                <div class="model-title">
+                    <div class="model-icon">🔗</div>
+                    <span>Relationship-Based Access Control</span>
+                </div>
+                <p class="model-description">
+                    ReBAC determines access based on the relationships between entities in a system. Pioneered by Google's Zanzibar, it models permissions as a graph where nodes represent entities (users, resources) and edges represent relationships, enabling complex hierarchical and social permissions.
+                </p>
+                <ul class="feature-list">
+                    <li><span class="check-icon">✓</span> Graph-based permission model</li>
+                    <li><span class="check-icon">✓</span> Natural for hierarchical structures</li>
+                    <li><span class="check-icon">✓</span> Handles complex relationships</li>
+                    <li><span class="check-icon">✓</span> Scales to billions of objects</li>
+                    <li><span class="check-icon">✓</span> Consistency guarantees</li>
+                    <li><span class="check-icon">✓</span> Perfect for collaborative apps</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="use-cases-section">
+            <h2 class="demo-title">Real-World Applications</h2>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card pbac">
+                    <h3>Healthcare Systems</h3>
+                    <p>PBAC excels in healthcare where access depends on multiple factors: practitioner role, patient consent, location (in-hospital vs remote), time of access, and data sensitivity. Policies like "Doctors can access patient records during business hours from hospital networks" are easily expressed.</p>
+                </div>
+                
+                <div class="use-case-card rebac">
+                    <h3>Social Networks</h3>
+                    <p>ReBAC naturally models social relationships: friends, followers, blocked users. Access policies like "view posts from friends and friends-of-friends" or "share photos with specific groups" map directly to the relationship graph.</p>
+                </div>
+                
+                <div class="use-case-card pbac">
+                    <h3>Financial Services</h3>
+                    <p>Banks use PBAC to enforce complex compliance rules: transaction limits based on user verification level, geographical restrictions, time-based controls, and risk scores. Natural language policies simplify audit and compliance.</p>
+                </div>
+                
+                <div class="use-case-card rebac">
+                    <h3>Document Management</h3>
+                    <p>ReBAC handles folder hierarchies naturally: owners of folders automatically get permissions on contained files. Team memberships, project relationships, and organizational structures flow through the permission graph.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="interactive-demo">
+            <h2 class="demo-title">Interactive Comparison Demo</h2>
+            
+            <div class="scenario-selector">
+                <button class="scenario-btn active" onclick="showScenario('enterprise')">Enterprise App</button>
+                <button class="scenario-btn" onclick="showScenario('healthcare')">Healthcare</button>
+                <button class="scenario-btn" onclick="showScenario('collaboration')">Team Collaboration</button>
+                <button class="scenario-btn" onclick="showScenario('finance')">Financial Services</button>
+            </div>
+
+            <div class="demo-content">
+                <div class="demo-model">
+                    <h3>PBAC Approach</h3>
+                    <div class="policy-display" id="pbac-policy">
+Allow employees to access company resources
+IF user.department = resource.department
+AND user.clearanceLevel >= resource.sensitivity
+AND location.isOfficeNetwork = true
+AND timeOfDay.isBusinessHours = true
+AND user.trainingCompleted.includes(resource.requiredTraining)</div>
+                    <div class="access-indicator access-granted" id="pbac-access">
+                        ✓ Access Granted - All conditions met
+                    </div>
+                </div>
+
+                <div class="demo-model">
+                    <h3>ReBAC Approach</h3>
+                    <div class="policy-display" id="rebac-policy">
+Allow access to resource
+IF user --[employed_by]--> company --[owns]--> resource
+OR user --[member_of]--> department --[manages]--> resource
+OR user --[assigned_to]--> project --[uses]--> resource
+OR user --[reports_to]--> manager --[has_access]--> resource</div>
+                    <div class="access-indicator access-granted" id="rebac-access">
+                        ✓ Access Granted - Relationship path found
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="comparison-table">
+            <h2 style="margin-bottom: 1.5rem; color: #f8fafc;">Detailed Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>PBAC</th>
+                        <th>ReBAC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Core Concept</td>
+                        <td>Centralized policies with attributes</td>
+                        <td>Graph of entity relationships</td>
+                    </tr>
+                    <tr>
+                        <td>Policy Language</td>
+                        <td>Natural language, business-friendly</td>
+                        <td>Relationship tuples and paths</td>
+                    </tr>
+                    <tr>
+                        <td>Best For</td>
+                        <td>Compliance-heavy environments, dynamic rules</td>
+                        <td>Hierarchical data, social structures</td>
+                    </tr>
+                    <tr>
+                        <td>Implementation Complexity</td>
+                        <td>Medium - Policy authoring required</td>
+                        <td>High - Graph modeling and traversal</td>
+                    </tr>
+                    <tr>
+                        <td>Performance</td>
+                        <td>Fast policy evaluation</td>
+                        <td>Depends on graph depth/complexity</td>
+                    </tr>
+                    <tr>
+                        <td>Scalability</td>
+                        <td>Excellent - Policies scale independently</td>
+                        <td>Excellent - Proven at Google scale</td>
+                    </tr>
+                    <tr>
+                        <td>Flexibility</td>
+                        <td>Very flexible with any attributes</td>
+                        <td>Flexible for relationship-based rules</td>
+                    </tr>
+                    <tr>
+                        <td>Audit & Compliance</td>
+                        <td>Excellent - Clear policy visibility</td>
+                        <td>Good - Relationship paths traceable</td>
+                    </tr>
+                    <tr>
+                        <td>Common Use Cases</td>
+                        <td>Banking, Healthcare, Government, Insurance</td>
+                        <td>Social Media, Collaboration Tools, File Systems</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="key-differences">
+            <h2>Key Differences Explained</h2>
+            
+            <div class="difference-point">
+                <h3>Authorization Philosophy</h3>
+                <p><strong>PBAC:</strong> "What conditions must be true for access?" - Evaluates multiple factors (attributes, context, environment) against defined policies.</p>
+                <p><strong>ReBAC:</strong> "What relationships exist between entities?" - Traverses relationship graphs to determine access paths.</p>
+            </div>
+            
+            <div class="difference-point">
+                <h3>Policy Management</h3>
+                <p><strong>PBAC:</strong> Centralized policy engine with business-friendly UI. Non-technical users can create and manage policies using natural language.</p>
+                <p><strong>ReBAC:</strong> Relationship data stored in graph database. Requires understanding of entity relationships and graph structures.</p>
+            </div>
+            
+            <div class="difference-point">
+                <h3>Evolution from Traditional Models</h3>
+                <p><strong>PBAC:</strong> Builds upon RBAC and ABAC, solving role explosion while maintaining familiar concepts. Can incorporate existing roles and attributes.</p>
+                <p><strong>ReBAC:</strong> Represents a paradigm shift from role-based thinking to relationship-based thinking. More dramatic change but powerful for certain use cases.</p>
+            </div>
+        </section>
+
+        <section class="recommendation">
+            <h2>Making the Right Choice</h2>
+            <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 2rem;">
+                Both PBAC and ReBAC are powerful modern authorization models. Your choice depends on your specific requirements, existing infrastructure, and use cases.
+            </p>
+            
+            <div class="decision-tree">
+                <h3>Choose PBAC When You Have:</h3>
+                <ul>
+                    <li>Complex compliance requirements (HIPAA, GDPR, SOX)</li>
+                    <li>Need for business-user-friendly policy management</li>
+                    <li>Multiple contextual factors affecting access (time, location, risk)</li>
+                    <li>Existing RBAC/ABAC systems to modernize</li>
+                    <li>Dynamic authorization requirements</li>
+                </ul>
+                
+                <h3 style="margin-top: 2rem;">Choose ReBAC When You Have:</h3>
+                <ul>
+                    <li>Natural hierarchical or graph-like data structures</li>
+                    <li>Social or collaborative features</li>
+                    <li>Complex organizational relationships</li>
+                    <li>Need to model "friends of friends" type permissions</li>
+                    <li>Document/file system with inherited permissions</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made by the SE Team for Walkthrough Purposes Only</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
