@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PBAC & ReBAC: Modern Authorization Models for Enterprise Security</title>
+    <title>PBAC, ReBAC & XACML: Modern Authorization Models for Enterprise Security</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>PBAC & ReBAC</h1>
-            <p class="subtitle">Choosing the Right Authorization Model for Modern Enterprise Security</p>
+            <h1>PBAC, ReBAC & XACML</h1>
+            <p class="subtitle">Comparing Modern Authorization Models for Enterprise Security</p>
         </div>
     </header>
 
     <main class="container">
         <section class="intro-section">
             <p>
-                As organizations face increasingly complex authorization challenges with distributed architectures, cloud services, and diverse user bases, traditional access control methods are showing their limitations. Policy-Based Access Control (PBAC) and Relationship-Based Access Control (ReBAC) represent two modern approaches to solving these challenges, each with distinct advantages for different use cases.
+                As organizations face increasingly complex authorization challenges with distributed architectures, cloud services, and diverse user bases, choosing the right access control model is crucial. Policy-Based Access Control (PBAC), Relationship-Based Access Control (ReBAC), and eXtensible Access Control Markup Language (XACML) represent three distinct approaches to solving these challenges, each with unique strengths and trade-offs for different enterprise scenarios.
             </p>
         </section>
 
@@ -28,15 +28,15 @@
                     <span>Policy-Based Access Control</span>
                 </div>
                 <p class="model-description">
-                    PBAC is a comprehensive authorization framework that centralizes access control through business-friendly policies. It combines the best of RBAC and ABAC, allowing organizations to create natural language policies that evaluate user attributes, resource properties, and environmental conditions in real-time.
+                    PBAC is a modern authorization framework that centralizes access control through business-friendly policies. It combines the best of RBAC and ABAC while prioritizing simplicity and usability for both technical and non-technical users.
                 </p>
                 <ul class="feature-list">
-                    <li><span class="check-icon">✓</span> Business-friendly natural language policies</li>
-                    <li><span class="check-icon">✓</span> Centralized policy management</li>
-                    <li><span class="check-icon">✓</span> Dynamic, context-aware decisions</li>
-                    <li><span class="check-icon">✓</span> Fine and coarse-grained control</li>
-                    <li><span class="check-icon">✓</span> Reduced compliance burden</li>
-                    <li><span class="check-icon">✓</span> Scales without role explosion</li>
+                    <li><span class="check-icon">✓</span> Business-friendly natural language</li>
+                    <li><span class="check-icon">✓</span> Intuitive GUI management</li>
+                    <li><span class="check-icon">✓</span> Out-of-the-box integrations</li>
+                    <li><span class="check-icon">✓</span> Real-time performance</li>
+                    <li><span class="check-icon">✓</span> Cloud-native architecture</li>
+                    <li><span class="check-icon">✓</span> Simplified policy lifecycle</li>
                 </ul>
             </div>
 
@@ -46,15 +46,33 @@
                     <span>Relationship-Based Access Control</span>
                 </div>
                 <p class="model-description">
-                    ReBAC determines access based on the relationships between entities in a system. Pioneered by Google's Zanzibar, it models permissions as a graph where nodes represent entities (users, resources) and edges represent relationships, enabling complex hierarchical and social permissions.
+                    ReBAC determines access based on relationships between entities. Pioneered by Google's Zanzibar, it models permissions as a graph where nodes represent entities and edges represent relationships.
                 </p>
                 <ul class="feature-list">
                     <li><span class="check-icon">✓</span> Graph-based permission model</li>
-                    <li><span class="check-icon">✓</span> Natural for hierarchical structures</li>
-                    <li><span class="check-icon">✓</span> Handles complex relationships</li>
-                    <li><span class="check-icon">✓</span> Scales to billions of objects</li>
+                    <li><span class="check-icon">✓</span> Natural for hierarchies</li>
+                    <li><span class="check-icon">✓</span> Complex relationships</li>
+                    <li><span class="check-icon">✓</span> Scales to billions</li>
                     <li><span class="check-icon">✓</span> Consistency guarantees</li>
                     <li><span class="check-icon">✓</span> Perfect for collaborative apps</li>
+                </ul>
+            </div>
+
+            <div class="model-card xacml">
+                <div class="model-title">
+                    <div class="model-icon">🔐</div>
+                    <span>XACML</span>
+                </div>
+                <p class="model-description">
+                    XACML is a standards-based, XML-driven language for defining access control policies. While powerful and flexible, it requires specialized expertise for implementation and management.
+                </p>
+                <ul class="feature-list">
+                    <li><span class="check-icon">✓</span> OASIS standard compliance</li>
+                    <li><span class="check-icon">✓</span> Extremely flexible policies</li>
+                    <li><span class="check-icon">✓</span> Vendor-neutral format</li>
+                    <li><span class="check-icon">✓</span> Fine-grained control</li>
+                    <li><span class="check-icon">✓</span> Mature ecosystem</li>
+                    <li><span class="check-icon">✓</span> Extensive customization</li>
                 </ul>
             </div>
         </section>
@@ -64,23 +82,33 @@
             
             <div class="use-cases-grid">
                 <div class="use-case-card pbac">
-                    <h3>Healthcare Systems</h3>
-                    <p>PBAC excels in healthcare where access depends on multiple factors: practitioner role, patient consent, location (in-hospital vs remote), time of access, and data sensitivity. Policies like "Doctors can access patient records during business hours from hospital networks" are easily expressed.</p>
+                    <h3>Modern Healthcare</h3>
+                    <p>PBAC excels with intuitive policies: "Doctors can access patient records during business hours from hospital networks." Easy for compliance teams to manage without XML expertise.</p>
                 </div>
                 
                 <div class="use-case-card rebac">
                     <h3>Social Networks</h3>
-                    <p>ReBAC naturally models social relationships: friends, followers, blocked users. Access policies like "view posts from friends and friends-of-friends" or "share photos with specific groups" map directly to the relationship graph.</p>
+                    <p>ReBAC naturally models social relationships: friends, followers, blocked users. "View posts from friends-of-friends" maps directly to the graph.</p>
+                </div>
+
+                <div class="use-case-card xacml">
+                    <h3>Government Systems</h3>
+                    <p>XACML suits highly regulated environments requiring standards compliance and extensive customization, where complexity is acceptable for maximum control.</p>
                 </div>
                 
                 <div class="use-case-card pbac">
                     <h3>Financial Services</h3>
-                    <p>Banks use PBAC to enforce complex compliance rules: transaction limits based on user verification level, geographical restrictions, time-based controls, and risk scores. Natural language policies simplify audit and compliance.</p>
+                    <p>Banks use PBAC for dynamic rules: transaction limits by verification level, geography, and risk scores - all managed through user-friendly interfaces.</p>
                 </div>
                 
                 <div class="use-case-card rebac">
                     <h3>Document Management</h3>
-                    <p>ReBAC handles folder hierarchies naturally: owners of folders automatically get permissions on contained files. Team memberships, project relationships, and organizational structures flow through the permission graph.</p>
+                    <p>ReBAC handles folder hierarchies naturally: owners of folders automatically get permissions on contained files through relationship inheritance.</p>
+                </div>
+
+                <div class="use-case-card xacml">
+                    <h3>Legacy Integration</h3>
+                    <p>XACML works well for organizations with existing XML infrastructure and teams experienced in XML-based policy management.</p>
                 </div>
             </div>
         </section>
@@ -106,7 +134,7 @@ AND location.isOfficeNetwork = true
 AND timeOfDay.isBusinessHours = true
 AND user.trainingCompleted.includes(resource.requiredTraining)</div>
                     <div class="access-indicator access-granted" id="pbac-access">
-                        ✓ Access Granted - All conditions met
+                        ✓ Granted - Simple policy evaluation
                     </div>
                 </div>
 
@@ -119,7 +147,31 @@ OR user --[member_of]--> department --[manages]--> resource
 OR user --[assigned_to]--> project --[uses]--> resource
 OR user --[reports_to]--> manager --[has_access]--> resource</div>
                     <div class="access-indicator access-granted" id="rebac-access">
-                        ✓ Access Granted - Relationship path found
+                        ✓ Granted - Relationship found
+                    </div>
+                </div>
+
+                <div class="demo-model">
+                    <h3>XACML Approach</h3>
+                    <div class="policy-display" id="xacml-policy">
+&lt;Policy&gt;
+  &lt;Rule Effect="Permit"&gt;
+    &lt;Condition&gt;
+      &lt;Apply FunctionId="and"&gt;
+        &lt;Apply FunctionId="string-equal"&gt;
+          &lt;AttributeValue&gt;resource.dept&lt;/AttributeValue&gt;
+          &lt;SubjectAttribute AttributeId="department"/&gt;
+        &lt;/Apply&gt;
+        &lt;Apply FunctionId="integer-greater-than-or-equal"&gt;
+          &lt;SubjectAttribute AttributeId="clearanceLevel"/&gt;
+          &lt;ResourceAttribute AttributeId="sensitivity"/&gt;
+        &lt;/Apply&gt;
+      &lt;/Apply&gt;
+    &lt;/Condition&gt;
+  &lt;/Rule&gt;
+&lt;/Policy&gt;</div>
+                    <div class="access-indicator access-granted" id="xacml-access">
+                        ✓ Granted - XML policy matched
                     </div>
                 </div>
             </div>
@@ -133,6 +185,7 @@ OR user --[reports_to]--> manager --[has_access]--> resource</div>
                         <th>Element</th>
                         <th>PBAC</th>
                         <th>ReBAC</th>
+                        <th>XACML</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -140,46 +193,61 @@ OR user --[reports_to]--> manager --[has_access]--> resource</div>
                         <td>Core Concept</td>
                         <td>Centralized policies with attributes</td>
                         <td>Graph of entity relationships</td>
+                        <td>XML-based policy standard</td>
                     </tr>
                     <tr>
                         <td>Policy Language</td>
                         <td>Natural language, business-friendly</td>
                         <td>Relationship tuples and paths</td>
+                        <td>XML format, standards-based</td>
+                    </tr>
+                    <tr>
+                        <td>Ease of Use</td>
+                        <td>High - GUI-based management</td>
+                        <td>Medium - Requires graph thinking</td>
+                        <td>Low - XML expertise required</td>
                     </tr>
                     <tr>
                         <td>Best For</td>
-                        <td>Compliance-heavy environments, dynamic rules</td>
-                        <td>Hierarchical data, social structures</td>
+                        <td>Modern enterprises, cloud-native</td>
+                        <td>Hierarchical/social structures</td>
+                        <td>Standards compliance, legacy</td>
                     </tr>
                     <tr>
-                        <td>Implementation Complexity</td>
-                        <td>Medium - Policy authoring required</td>
-                        <td>High - Graph modeling and traversal</td>
+                        <td>Implementation</td>
+                        <td>Quick with out-of-box integrations</td>
+                        <td>Complex graph modeling</td>
+                        <td>Extensive customization needed</td>
                     </tr>
                     <tr>
                         <td>Performance</td>
-                        <td>Fast policy evaluation</td>
-                        <td>Depends on graph depth/complexity</td>
+                        <td>Optimized for real-time</td>
+                        <td>Depends on graph complexity</td>
+                        <td>XML parsing overhead</td>
+                    </tr>
+                    <tr>
+                        <td>Management</td>
+                        <td>Centralized, user-friendly UI</td>
+                        <td>Graph database required</td>
+                        <td>Decentralized XML files</td>
+                    </tr>
+                    <tr>
+                        <td>Integration</td>
+                        <td>Modern APIs, microservices</td>
+                        <td>Application-specific</td>
+                        <td>Custom integration effort</td>
                     </tr>
                     <tr>
                         <td>Scalability</td>
-                        <td>Excellent - Policies scale independently</td>
-                        <td>Excellent - Proven at Google scale</td>
-                    </tr>
-                    <tr>
-                        <td>Flexibility</td>
-                        <td>Very flexible with any attributes</td>
-                        <td>Flexible for relationship-based rules</td>
-                    </tr>
-                    <tr>
-                        <td>Audit & Compliance</td>
-                        <td>Excellent - Clear policy visibility</td>
-                        <td>Good - Relationship paths traceable</td>
+                        <td>Excellent - Cloud-optimized</td>
+                        <td>Excellent - Proven at scale</td>
+                        <td>Good - But complex management</td>
                     </tr>
                     <tr>
                         <td>Common Use Cases</td>
-                        <td>Banking, Healthcare, Government, Insurance</td>
-                        <td>Social Media, Collaboration Tools, File Systems</td>
+                        <td>Banking, Healthcare, SaaS</td>
+                        <td>Social Media, Collaboration</td>
+                        <td>Government, Legacy Systems</td>
                     </tr>
                 </tbody>
             </table>
@@ -189,38 +257,48 @@ OR user --[reports_to]--> manager --[has_access]--> resource</div>
             <h2>Key Differences Explained</h2>
             
             <div class="difference-point">
-                <h3>Authorization Philosophy</h3>
-                <p><strong>PBAC:</strong> "What conditions must be true for access?" - Evaluates multiple factors (attributes, context, environment) against defined policies.</p>
-                <p><strong>ReBAC:</strong> "What relationships exist between entities?" - Traverses relationship graphs to determine access paths.</p>
+                <h3>PBAC vs XACML: Modern Simplicity vs Standards Compliance</h3>
+                <p><strong>PBAC:</strong> Designed for simplicity and usability with intuitive policy definitions managed through centralized interfaces. Makes access control accessible to business users and security teams without specialized expertise.</p>
+                <p><strong>XACML:</strong> Provides standards-based flexibility through XML, offering maximum customization at the cost of complexity. Requires XML expertise and can be challenging to manage at scale without additional abstraction layers.</p>
             </div>
             
             <div class="difference-point">
-                <h3>Policy Management</h3>
-                <p><strong>PBAC:</strong> Centralized policy engine with business-friendly UI. Non-technical users can create and manage policies using natural language.</p>
-                <p><strong>ReBAC:</strong> Relationship data stored in graph database. Requires understanding of entity relationships and graph structures.</p>
+                <h3>Policy Management Philosophy</h3>
+                <p><strong>PBAC:</strong> Centralized management via graphical interfaces and APIs. Simplifies the entire policy lifecycle with built-in simulation and analysis tools.</p>
+                <p><strong>ReBAC:</strong> Manages relationships in graph databases, requiring understanding of entity connections and graph traversal.</p>
+                <p><strong>XACML:</strong> Uses decentralized XML files which can lead to fragmented administration, especially challenging in distributed environments.</p>
             </div>
             
             <div class="difference-point">
-                <h3>Evolution from Traditional Models</h3>
-                <p><strong>PBAC:</strong> Builds upon RBAC and ABAC, solving role explosion while maintaining familiar concepts. Can incorporate existing roles and attributes.</p>
-                <p><strong>ReBAC:</strong> Represents a paradigm shift from role-based thinking to relationship-based thinking. More dramatic change but powerful for certain use cases.</p>
+                <h3>Integration and Deployment</h3>
+                <p><strong>PBAC:</strong> Offers extensive out-of-the-box integrations with enterprise applications, APIs, and cloud services. Supports modern architectures natively.</p>
+                <p><strong>ReBAC:</strong> Best integrated within applications that naturally model relationships, requiring custom implementation for each use case.</p>
+                <p><strong>XACML:</strong> Requires significant custom integration effort, particularly in modern cloud-native environments. Better suited for XML-based legacy systems.</p>
+            </div>
+
+            <div class="difference-point">
+                <h3>Performance Considerations</h3>
+                <p><strong>PBAC:</strong> Optimized for real-time, dynamic access decisions in cloud and distributed environments with minimal latency.</p>
+                <p><strong>ReBAC:</strong> Performance depends on graph depth and complexity; efficient for relationship traversal but can slow with deep hierarchies.</p>
+                <p><strong>XACML:</strong> XML parsing and complex policy evaluation can introduce performance overhead, especially in high-throughput scenarios.</p>
             </div>
         </section>
 
         <section class="recommendation">
             <h2>Making the Right Choice</h2>
             <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 2rem;">
-                Both PBAC and ReBAC are powerful modern authorization models. Your choice depends on your specific requirements, existing infrastructure, and use cases.
+                PBAC, ReBAC, and XACML each serve different organizational needs. Your choice depends on your technical requirements, existing infrastructure, team expertise, and specific use cases.
             </p>
             
             <div class="decision-tree">
                 <h3>Choose PBAC When You Have:</h3>
                 <ul>
-                    <li>Complex compliance requirements (HIPAA, GDPR, SOX)</li>
                     <li>Need for business-user-friendly policy management</li>
-                    <li>Multiple contextual factors affecting access (time, location, risk)</li>
-                    <li>Existing RBAC/ABAC systems to modernize</li>
-                    <li>Dynamic authorization requirements</li>
+                    <li>Modern cloud-native or hybrid infrastructure</li>
+                    <li>Complex compliance requirements (HIPAA, GDPR, SOX)</li>
+                    <li>Limited specialized security expertise</li>
+                    <li>Requirements for quick deployment and integration</li>
+                    <li>Dynamic authorization needs with multiple context factors</li>
                 </ul>
                 
                 <h3 style="margin-top: 2rem;">Choose ReBAC When You Have:</h3>
@@ -228,8 +306,18 @@ OR user --[reports_to]--> manager --[has_access]--> resource</div>
                     <li>Natural hierarchical or graph-like data structures</li>
                     <li>Social or collaborative features</li>
                     <li>Complex organizational relationships</li>
-                    <li>Need to model "friends of friends" type permissions</li>
-                    <li>Document/file system with inherited permissions</li>
+                    <li>"Friends of friends" type permission requirements</li>
+                    <li>Document systems with inherited permissions</li>
+                </ul>
+
+                <h3 style="margin-top: 2rem;">Choose XACML When You Have:</h3>
+                <ul>
+                    <li>Strict requirement for standards compliance</li>
+                    <li>Existing XML-based infrastructure</li>
+                    <li>Team with deep XML and XACML expertise</li>
+                    <li>Legacy systems requiring vendor-neutral formats</li>
+                    <li>Need for maximum policy customization flexibility</li>
+                    <li>Government or highly regulated environments</li>
                 </ul>
             </div>
         </section>
