@@ -19,6 +19,9 @@
             <p>
                 As organizations face increasingly complex authorization challenges with distributed architectures, cloud services, and diverse user bases, choosing the right access control model is crucial. Policy-Based Access Control (PBAC), Relationship-Based Access Control (ReBAC), and eXtensible Access Control Markup Language (XACML) represent three distinct approaches to solving these challenges, each with unique strengths and trade-offs for different enterprise scenarios.
             </p>
+            <p style="margin-top: 1rem;">
+                While PBAC emphasizes centralized policy management and enforcement across resources, ReBAC reflects real-world relationships between entities, offering flexibility in dynamic and social environments. XACML provides standards-based control with maximum customization capabilities. Understanding these differences is key to selecting the right model for your organization's specific needs.
+            </p>
         </section>
 
         <section class="comparison-grid">
@@ -46,15 +49,15 @@
                     <span>Relationship-Based Access Control</span>
                 </div>
                 <p class="model-description">
-                    ReBAC determines access based on relationships between entities. Pioneered by Google's Zanzibar, it models permissions as a graph where nodes represent entities and edges represent relationships.
+                    ReBAC makes access decisions based on relationships between entities such as users, resources, and contextual elements. It considers not only roles or attributes but also relationships like manager, collaborator, or hierarchical connections between departments, making it ideal for social networks and collaboration platforms.
                 </p>
                 <ul class="feature-list">
-                    <li><span class="check-icon">✓</span> Graph-based permission model</li>
-                    <li><span class="check-icon">✓</span> Natural for hierarchies</li>
-                    <li><span class="check-icon">✓</span> Complex relationships</li>
-                    <li><span class="check-icon">✓</span> Scales to billions</li>
-                    <li><span class="check-icon">✓</span> Consistency guarantees</li>
-                    <li><span class="check-icon">✓</span> Perfect for collaborative apps</li>
+                    <li><span class="check-icon">✓</span> Relationship-centric access control</li>
+                    <li><span class="check-icon">✓</span> Mirrors real-world relationships</li>
+                    <li><span class="check-icon">✓</span> Dynamic social permissions</li>
+                    <li><span class="check-icon">✓</span> Hierarchical & peer relationships</li>
+                    <li><span class="check-icon">✓</span> Contextual entity connections</li>
+                    <li><span class="check-icon">✓</span> Perfect for collaboration platforms</li>
                 </ul>
             </div>
 
@@ -88,7 +91,7 @@
                 
                 <div class="use-case-card rebac">
                     <h3>Social Networks</h3>
-                    <p>ReBAC naturally models social relationships: friends, followers, blocked users. "View posts from friends-of-friends" maps directly to the graph.</p>
+                    <p>ReBAC naturally models social relationships where access depends on connections between users. It reflects real-world relationships like friends, followers, managers, and collaborators, making it ideal for platforms where relationships dictate resource access.</p>
                 </div>
 
                 <div class="use-case-card xacml">
@@ -102,8 +105,8 @@
                 </div>
                 
                 <div class="use-case-card rebac">
-                    <h3>Document Management</h3>
-                    <p>ReBAC handles folder hierarchies naturally: owners of folders automatically get permissions on contained files through relationship inheritance.</p>
+                    <h3>Collaboration Platforms</h3>
+                    <p>ReBAC excels in environments with complex relationship structures. It handles hierarchical relationships between departments, peer collaboration, and dynamic team structures where access is determined by relationships rather than static roles or attributes.</p>
                 </div>
 
                 <div class="use-case-card xacml">
@@ -142,12 +145,13 @@ AND user.trainingCompleted.includes(resource.requiredTraining)</div>
                     <h3>ReBAC Approach</h3>
                     <div class="policy-display" id="rebac-policy">
 Allow access to resource
+Based on entity relationships:
 IF user --[employed_by]--> company --[owns]--> resource
 OR user --[member_of]--> department --[manages]--> resource
-OR user --[assigned_to]--> project --[uses]--> resource
+OR user --[collaborates_with]--> resource_owner
 OR user --[reports_to]--> manager --[has_access]--> resource</div>
                     <div class="access-indicator access-granted" id="rebac-access">
-                        ✓ Granted - Relationship found
+                        ✓ Granted - Relationship verified
                     </div>
                 </div>
 
@@ -192,25 +196,25 @@ OR user --[reports_to]--> manager --[has_access]--> resource</div>
                     <tr>
                         <td>Core Concept</td>
                         <td>Centralized policies with attributes</td>
-                        <td>Graph of entity relationships</td>
+                        <td>Relationships between entities</td>
                         <td>XML-based policy standard</td>
                     </tr>
                     <tr>
                         <td>Policy Language</td>
                         <td>Natural language, business-friendly</td>
-                        <td>Relationship tuples and paths</td>
+                        <td>Relationship definitions and paths</td>
                         <td>XML format, standards-based</td>
                     </tr>
                     <tr>
                         <td>Ease of Use</td>
                         <td>High - GUI-based management</td>
-                        <td>Medium - Requires graph thinking</td>
+                        <td>Medium - Requires relationship thinking</td>
                         <td>Low - XML expertise required</td>
                     </tr>
                     <tr>
                         <td>Best For</td>
-                        <td>Modern enterprises, cloud-native</td>
-                        <td>Hierarchical/social structures</td>
+                        <td>Compliance, modern enterprises</td>
+                        <td>Social/collaborative environments</td>
                         <td>Standards compliance, legacy</td>
                     </tr>
                     <tr>
@@ -257,6 +261,12 @@ OR user --[reports_to]--> manager --[has_access]--> resource</div>
             <h2>Key Differences Explained</h2>
             
             <div class="difference-point">
+                <h3>PBAC vs ReBAC: Policy-Driven vs Relationship-Driven</h3>
+                <p><strong>PBAC:</strong> Focuses on predefined policies that govern access based on roles, attributes, and environmental factors. It centralizes policy management, allowing fine-grained or coarse-grained control across applications and resources. Ideal for ensuring consistency, compliance, and visibility across the enterprise.</p>
+                <p><strong>ReBAC:</strong> Centers around relationships between users, resources, and contextual entities. Access is granted based on the nature of these relationships rather than just user attributes or roles. Well-suited for environments where relationships like supervisor-employee or peer collaboration dictate resource access. ReBAC reflects real-world relationships, offering more flexibility in dynamic and social environments.</p>
+            </div>
+
+            <div class="difference-point">
                 <h3>PBAC vs XACML: Modern Simplicity vs Standards Compliance</h3>
                 <p><strong>PBAC:</strong> Designed for simplicity and usability with intuitive policy definitions managed through centralized interfaces. Makes access control accessible to business users and security teams without specialized expertise.</p>
                 <p><strong>XACML:</strong> Provides standards-based flexibility through XML, offering maximum customization at the cost of complexity. Requires XML expertise and can be challenging to manage at scale without additional abstraction layers.</p>
@@ -265,14 +275,14 @@ OR user --[reports_to]--> manager --[has_access]--> resource</div>
             <div class="difference-point">
                 <h3>Policy Management Philosophy</h3>
                 <p><strong>PBAC:</strong> Centralized management via graphical interfaces and APIs. Simplifies the entire policy lifecycle with built-in simulation and analysis tools.</p>
-                <p><strong>ReBAC:</strong> Manages relationships in graph databases, requiring understanding of entity connections and graph traversal.</p>
+                <p><strong>ReBAC:</strong> Manages relationships in graph databases, requiring understanding of entity connections and graph traversal. Policies mirror real-world relationships, making them intuitive for collaboration scenarios.</p>
                 <p><strong>XACML:</strong> Uses decentralized XML files which can lead to fragmented administration, especially challenging in distributed environments.</p>
             </div>
             
             <div class="difference-point">
                 <h3>Integration and Deployment</h3>
                 <p><strong>PBAC:</strong> Offers extensive out-of-the-box integrations with enterprise applications, APIs, and cloud services. Supports modern architectures natively.</p>
-                <p><strong>ReBAC:</strong> Best integrated within applications that naturally model relationships, requiring custom implementation for each use case.</p>
+                <p><strong>ReBAC:</strong> Best integrated within applications that naturally model relationships, requiring custom implementation for each use case. Excels in systems with complex relationship structures where traditional models fall short.</p>
                 <p><strong>XACML:</strong> Requires significant custom integration effort, particularly in modern cloud-native environments. Better suited for XML-based legacy systems.</p>
             </div>
 
@@ -303,11 +313,14 @@ OR user --[reports_to]--> manager --[has_access]--> resource</div>
                 
                 <h3 style="margin-top: 2rem;">Choose ReBAC When You Have:</h3>
                 <ul>
-                    <li>Natural hierarchical or graph-like data structures</li>
-                    <li>Social or collaborative features</li>
-                    <li>Complex organizational relationships</li>
+                    <li>Complex relationship structures between users and resources</li>
+                    <li>Social networks or collaboration platforms</li>
+                    <li>Dynamic relationships that dictate access (manager-employee, peer collaboration)</li>
+                    <li>Systems where traditional role-based models fall short</li>
+                    <li>Need to mirror real-world organizational relationships</li>
+                    <li>Hierarchical structures with inherited permissions</li>
                     <li>"Friends of friends" type permission requirements</li>
-                    <li>Document systems with inherited permissions</li>
+                    <li>Environments where relationships are more important than attributes</li>
                 </ul>
 
                 <h3 style="margin-top: 2rem;">Choose XACML When You Have:</h3>
