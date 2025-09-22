@@ -8,8 +8,10 @@ function showScenario(scenario) {
     // Update demo content based on scenario
     const pbacPolicy = document.getElementById('pbac-policy');
     const rebacPolicy = document.getElementById('rebac-policy');
+    const xacmlPolicy = document.getElementById('xacml-policy');
     const pbacAccess = document.getElementById('pbac-access');
     const rebacAccess = document.getElementById('rebac-access');
+    const xacmlAccess = document.getElementById('xacml-access');
 
     switch(scenario) {
         case 'enterprise':
@@ -19,11 +21,33 @@ AND user.clearanceLevel >= resource.sensitivity
 AND location.isOfficeNetwork = true
 AND timeOfDay.isBusinessHours = true
 AND user.trainingCompleted.includes(resource.requiredTraining)`;
+            
             rebacPolicy.innerHTML = `Allow access to resource
 IF user --[employed_by]--> company --[owns]--> resource
 OR user --[member_of]--> department --[manages]--> resource
 OR user --[assigned_to]--> project --[uses]--> resource
 OR user --[reports_to]--> manager --[has_access]--> resource`;
+            
+            xacmlPolicy.innerHTML = `&lt;Policy&gt;
+  &lt;Rule Effect="Permit"&gt;
+    &lt;Condition&gt;
+      &lt;Apply FunctionId="and"&gt;
+        &lt;Apply FunctionId="string-equal"&gt;
+          &lt;AttributeValue&gt;resource.dept&lt;/AttributeValue&gt;
+          &lt;SubjectAttribute AttributeId="department"/&gt;
+        &lt;/Apply&gt;
+        &lt;Apply FunctionId="integer-greater-than-or-equal"&gt;
+          &lt;SubjectAttribute AttributeId="clearanceLevel"/&gt;
+          &lt;ResourceAttribute AttributeId="sensitivity"/&gt;
+        &lt;/Apply&gt;
+      &lt;/Apply&gt;
+    &lt;/Condition&gt;
+  &lt;/Rule&gt;
+&lt;/Policy&gt;`;
+            
+            pbacAccess.innerHTML = '✓ Granted - Simple policy evaluation';
+            rebacAccess.innerHTML = '✓ Granted - Relationship found';
+            xacmlAccess.innerHTML = '✓ Granted - XML policy matched';
             break;
 
         case 'healthcare':
@@ -34,12 +58,38 @@ AND patient.consentGiven = true
 AND (location.isHospital = true OR user.remoteAccessApproved = true)
 AND timeOfAccess.isEmergency = true 
    OR timeOfAccess.isBusinessHours = true`;
+            
             rebacPolicy.innerHTML = `Allow access to patient record
 IF user --[primary_physician]--> patient
 OR user --[attending_physician]--> patient
 OR user --[assigned_nurse]--> patient --[has_record]--> record
 OR user --[specialist_referral]--> patient
 OR user --[emergency_access_granted]--> record`;
+            
+            xacmlPolicy.innerHTML = `&lt;Policy&gt;
+  &lt;Rule Effect="Permit"&gt;
+    &lt;Target&gt;
+      &lt;Subjects&gt;
+        &lt;Subject&gt;
+          &lt;SubjectMatch MatchId="string-equal"&gt;
+            &lt;AttributeValue&gt;Doctor&lt;/AttributeValue&gt;
+            &lt;SubjectAttribute AttributeId="role"/&gt;
+          &lt;/SubjectMatch&gt;
+        &lt;/Subject&gt;
+      &lt;/Subjects&gt;
+    &lt;/Target&gt;
+    &lt;Condition&gt;
+      &lt;Apply FunctionId="boolean-equal"&gt;
+        &lt;ResourceAttribute AttributeId="patient.consent"/&gt;
+        &lt;AttributeValue&gt;true&lt;/AttributeValue&gt;
+      &lt;/Apply&gt;
+    &lt;/Condition&gt;
+  &lt;/Rule&gt;
+&lt;/Policy&gt;`;
+            
+            pbacAccess.innerHTML = '✓ Granted - Medical access approved';
+            rebacAccess.innerHTML = '✓ Granted - Medical relationship verified';
+            xacmlAccess.innerHTML = '✓ Granted - XML rules satisfied';
             break;
 
         case 'collaboration':
@@ -50,12 +100,44 @@ AND (user.role = "ProjectOwner"
     OR (user.role = "Contributor" AND resource.type != "Confidential")
     OR (user.role = "Viewer" AND action = "read"))
 AND user.nda.signed = true`;
+            
             rebacPolicy.innerHTML = `Allow access to project resource
 IF user --[owns]--> project --[contains]--> resource
 OR user --[member]--> team --[assigned_to]--> project
 OR user --[invited_to]--> project WITH permission = action
 OR user --[manages]--> team --[works_on]--> project
 OR resource --[shared_with]--> user`;
+            
+            xacmlPolicy.innerHTML = `&lt;Policy&gt;
+  &lt;Rule Effect="Permit"&gt;
+    &lt;Target&gt;
+      &lt;Resources&gt;
+        &lt;Resource&gt;
+          &lt;ResourceMatch MatchId="string-equal"&gt;
+            &lt;AttributeValue&gt;ProjectResource&lt;/AttributeValue&gt;
+            &lt;ResourceAttribute AttributeId="type"/&gt;
+          &lt;/ResourceMatch&gt;
+        &lt;/Resource&gt;
+      &lt;/Resources&gt;
+    &lt;/Target&gt;
+    &lt;Condition&gt;
+      &lt;Apply FunctionId="and"&gt;
+        &lt;Apply FunctionId="string-equal"&gt;
+          &lt;SubjectAttribute AttributeId="status"/&gt;
+          &lt;AttributeValue&gt;Active&lt;/AttributeValue&gt;
+        &lt;/Apply&gt;
+        &lt;Apply FunctionId="boolean-equal"&gt;
+          &lt;SubjectAttribute AttributeId="nda.signed"/&gt;
+          &lt;AttributeValue&gt;true&lt;/AttributeValue&gt;
+        &lt;/Apply&gt;
+      &lt;/Apply&gt;
+    &lt;/Condition&gt;
+  &lt;/Rule&gt;
+&lt;/Policy&gt;`;
+            
+            pbacAccess.innerHTML = '✓ Granted - Team permissions verified';
+            rebacAccess.innerHTML = '✓ Granted - Team relationship established';
+            xacmlAccess.innerHTML = '✓ Granted - XML conditions met';
             break;
 
         case 'finance':
@@ -67,6 +149,7 @@ AND location.country IN user.allowedCountries
 AND NOT location.isHighRisk = true
 AND (transaction.type = "Withdrawal" 
     IMPLIES account.balance >= transaction.amount)`;
+            
             rebacPolicy.innerHTML = `Allow transaction on account
 IF user --[owns]--> account
 OR user --[authorized_user]--> account
@@ -74,13 +157,32 @@ OR user --[power_of_attorney]--> account.owner
 OR (user --[employee]--> bank 
     AND user --[manages_accounts]--> account)
 OR user --[joint_owner]--> account`;
-            pbacAccess.innerHTML = '✓ Access Granted - Risk assessment passed';
-            rebacAccess.innerHTML = '✓ Access Granted - Authorized relationship';
+            
+            xacmlPolicy.innerHTML = `&lt;Policy&gt;
+  &lt;Rule Effect="Permit"&gt;
+    &lt;Condition&gt;
+      &lt;Apply FunctionId="and"&gt;
+        &lt;Apply FunctionId="string-equal"&gt;
+          &lt;SubjectAttribute AttributeId="accountStatus"/&gt;
+          &lt;AttributeValue&gt;Active&lt;/AttributeValue&gt;
+        &lt;/Apply&gt;
+        &lt;Apply FunctionId="integer-less-than-or-equal"&gt;
+          &lt;ResourceAttribute AttributeId="amount"/&gt;
+          &lt;SubjectAttribute AttributeId="dailyLimit"/&gt;
+        &lt;/Apply&gt;
+      &lt;/Apply&gt;
+    &lt;/Condition&gt;
+  &lt;/Rule&gt;
+&lt;/Policy&gt;`;
+            
+            pbacAccess.innerHTML = '✓ Granted - Risk assessment passed';
+            rebacAccess.innerHTML = '✓ Granted - Authorized relationship';
+            xacmlAccess.innerHTML = '✓ Granted - Transaction approved';
             break;
     }
 
     // Animate the change
-    [pbacPolicy, rebacPolicy].forEach(el => {
+    [pbacPolicy, rebacPolicy, xacmlPolicy].forEach(el => {
         el.style.opacity = '0';
         setTimeout(() => {
             el.style.opacity = '1';
