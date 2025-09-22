@@ -23,9 +23,10 @@ AND timeOfDay.isBusinessHours = true
 AND user.trainingCompleted.includes(resource.requiredTraining)`;
             
             rebacPolicy.innerHTML = `Allow access to resource
+Based on entity relationships:
 IF user --[employed_by]--> company --[owns]--> resource
 OR user --[member_of]--> department --[manages]--> resource
-OR user --[assigned_to]--> project --[uses]--> resource
+OR user --[collaborates_with]--> resource_owner
 OR user --[reports_to]--> manager --[has_access]--> resource`;
             
             xacmlPolicy.innerHTML = `&lt;Policy&gt;
@@ -46,7 +47,7 @@ OR user --[reports_to]--> manager --[has_access]--> resource`;
 &lt;/Policy&gt;`;
             
             pbacAccess.innerHTML = '✓ Granted - Simple policy evaluation';
-            rebacAccess.innerHTML = '✓ Granted - Relationship found';
+            rebacAccess.innerHTML = '✓ Granted - Relationship verified';
             xacmlAccess.innerHTML = '✓ Granted - XML policy matched';
             break;
 
@@ -60,11 +61,12 @@ AND timeOfAccess.isEmergency = true
    OR timeOfAccess.isBusinessHours = true`;
             
             rebacPolicy.innerHTML = `Allow access to patient record
+Based on medical relationships:
 IF user --[primary_physician]--> patient
 OR user --[attending_physician]--> patient
-OR user --[assigned_nurse]--> patient --[has_record]--> record
-OR user --[specialist_referral]--> patient
-OR user --[emergency_access_granted]--> record`;
+OR user --[collaborates_with]--> primary_physician
+OR user --[supervises]--> attending_nurse --[cares_for]--> patient
+OR user --[specialist_referral]--> patient`;
             
             xacmlPolicy.innerHTML = `&lt;Policy&gt;
   &lt;Rule Effect="Permit"&gt;
@@ -88,7 +90,7 @@ OR user --[emergency_access_granted]--> record`;
 &lt;/Policy&gt;`;
             
             pbacAccess.innerHTML = '✓ Granted - Medical access approved';
-            rebacAccess.innerHTML = '✓ Granted - Medical relationship verified';
+            rebacAccess.innerHTML = '✓ Granted - Medical relationship established';
             xacmlAccess.innerHTML = '✓ Granted - XML rules satisfied';
             break;
 
@@ -102,11 +104,12 @@ AND (user.role = "ProjectOwner"
 AND user.nda.signed = true`;
             
             rebacPolicy.innerHTML = `Allow access to project resource
+Based on collaboration relationships:
 IF user --[owns]--> project --[contains]--> resource
-OR user --[member]--> team --[assigned_to]--> project
-OR user --[invited_to]--> project WITH permission = action
-OR user --[manages]--> team --[works_on]--> project
-OR resource --[shared_with]--> user`;
+OR user --[collaborates_with]--> project_members
+OR user --[invited_by]--> project_owner
+OR user --[peer_of]--> resource_contributor
+OR resource --[shared_with]--> user_team`;
             
             xacmlPolicy.innerHTML = `&lt;Policy&gt;
   &lt;Rule Effect="Permit"&gt;
@@ -136,7 +139,7 @@ OR resource --[shared_with]--> user`;
 &lt;/Policy&gt;`;
             
             pbacAccess.innerHTML = '✓ Granted - Team permissions verified';
-            rebacAccess.innerHTML = '✓ Granted - Team relationship established';
+            rebacAccess.innerHTML = '✓ Granted - Collaboration relationship active';
             xacmlAccess.innerHTML = '✓ Granted - XML conditions met';
             break;
 
@@ -151,12 +154,12 @@ AND (transaction.type = "Withdrawal"
     IMPLIES account.balance >= transaction.amount)`;
             
             rebacPolicy.innerHTML = `Allow transaction on account
+Based on financial relationships:
 IF user --[owns]--> account
-OR user --[authorized_user]--> account
-OR user --[power_of_attorney]--> account.owner
-OR (user --[employee]--> bank 
-    AND user --[manages_accounts]--> account)
-OR user --[joint_owner]--> account`;
+OR user --[authorized_by]--> account_owner
+OR user --[power_of_attorney]--> account_owner
+OR user --[manages_for]--> client --[owns]--> account
+OR user --[joint_owner_with]--> co_owner --[owns]--> account`;
             
             xacmlPolicy.innerHTML = `&lt;Policy&gt;
   &lt;Rule Effect="Permit"&gt;
@@ -176,7 +179,7 @@ OR user --[joint_owner]--> account`;
 &lt;/Policy&gt;`;
             
             pbacAccess.innerHTML = '✓ Granted - Risk assessment passed';
-            rebacAccess.innerHTML = '✓ Granted - Authorized relationship';
+            rebacAccess.innerHTML = '✓ Granted - Financial relationship authorized';
             xacmlAccess.innerHTML = '✓ Granted - Transaction approved';
             break;
     }
